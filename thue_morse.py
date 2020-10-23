@@ -9,6 +9,12 @@ import time
 
 
 def generate(num_players, min_length, trim=False):
+    assert num_players >= 1 and isinstance(num_players, int)
+
+    # handle singleton case
+    if num_players == 1:
+        return [0] * min_length
+
     # generate sequences
     seq = list(range(num_players))
     replacement_dict = dict()
