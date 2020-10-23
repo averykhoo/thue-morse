@@ -35,16 +35,16 @@ def thue_morse_iter(num_players, min_length, trim=False):
     seq = list(range(num_players))
     seqs = []
     i = 0
-    while len(seqs) < min_length:
+    while num_players ** i < min_length:
         i += 1
-        seqs = list(itertools.product(seq, repeat=i))
+    seqs = list(itertools.product(seq, repeat=i))
 
     out = [sum(seq) % num_players for seq in seqs]
     return out[:min_length] if trim else out
 
 
 if __name__ == '__main__':
-    n = 2
+    n = 343
     min_len = 99999
 
 
@@ -62,10 +62,26 @@ if __name__ == '__main__':
 
     print(len(f1()))
     print(len(f2()))  # slow
-    print(len(f3()))  # super slow
+    print(len(f3()))  # less slow (sometimes)
 
     print(list(fair_test(f1, f2, f3, min_len=10, n_iterations=10)))
-    # [('f1', 2.8893837928771973),
-    #  ('f2', 18.235366582870483),
-    #  ('f3', 20.77123260498047),
+    # for 2 players, min_len=99999: (f1 and f3 produce 131072)
+    # [('f1', 2.994079113006592),
+    #  ('f2', 18.689956426620483),  <-- faster than usual because of popcount
+    #  ('f3', 16.79806089401245),
+    # ]
+    # for 7 players, min_len=99999: (f1 and f3 produce 117649)
+    # [('f1', 0.4846773147583008),
+    #  ('f2', 43.50232172012329),
+    #  ('f3', 8.666783809661865),
+    # ]
+    # for 48 players, min_len=99999: (f1 and f3 produce 110592)
+    # [('f1', 0.13373684883117676),
+    #  ('f2', 32.38348436355591),
+    #  ('f3', 7.479870319366455),
+    # ]
+    # for 343 players, min_len=99999: (f1 and f3 produce 117649)
+    # [('f1', 0.5106184482574463),
+    #  ('f2', 23.304750204086304),
+    #  ('f3', 7.471975326538086),
     # ]
