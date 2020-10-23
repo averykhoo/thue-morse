@@ -1,3 +1,7 @@
+"""
+sum-of-terms definition (§2.1)
+in base-2, basically just popcount
+"""
 from collections import Counter
 
 from thue_morse import generate
